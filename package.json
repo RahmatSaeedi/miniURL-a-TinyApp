@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/RahmatSaeedi/tinnyApp/issues"
   },
-  "homepage": "https://github.com/RahmatSaeedi/tinnyApp#readme"
+  "homepage": "https://github.com/RahmatSaeedi/tinnyApp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
