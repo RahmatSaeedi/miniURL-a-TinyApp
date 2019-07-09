@@ -14,6 +14,12 @@ app.get("/", (req, resp) => {
   resp.render('index', {urlDatabase});
 });
 
+app.get("/urls", (req, resp) => {
+  resp.render("urls_index", {
+    urls: urlDatabase
+  });
+});
+
 app.get("/about", (req, resp) => {
   resp.render('about');
 });
