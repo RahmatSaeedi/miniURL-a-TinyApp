@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 
+app.set("view engine", 'ejs');
 
 const urlDatabase = {
   "LH" : "https://www.lighthouselabs.ca",
@@ -9,8 +10,14 @@ const urlDatabase = {
 };
 
 app.get("/", (req, resp) => {
-  resp.send("Welcome");
+
+  resp.render('index', {urlDatabase});
 });
+
+app.get("/about", (req, resp) => {
+  resp.render('about');
+});
+
 
 app.get("/urls.json", (req, resp) => {
   resp.json(urlDatabase);
