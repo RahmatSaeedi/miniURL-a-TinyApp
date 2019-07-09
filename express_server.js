@@ -9,20 +9,22 @@ const urlDatabase = {
   "g" : "https://www.google.ca"
 };
 
-app.get("/", (req, resp) => {
-
-  resp.render('index', {urlDatabase});
-});
-
 app.get("/urls", (req, resp) => {
   resp.render("urls_index", {
-    urls: urlDatabase
+    'urls': urlDatabase
   });
 });
 
-app.get("/about", (req, resp) => {
-  resp.render('about');
+
+app.get(`/urls/:shortURL`, (req, resp) => {
+
+  resp.render("urls_show", {
+    longURL: urlDatabase[req.params.shortURL],
+    shortURL: req.params.shortURL
+  });
 });
+
+
 
 
 app.get("/urls.json", (req, resp) => {
