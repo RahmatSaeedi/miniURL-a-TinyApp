@@ -24,7 +24,9 @@ app.get(`/urls/:shortURL`, (req, resp) => {
   });
 });
 
-
+app.get(`/u/:shortURL`, (req, resp) => {
+  resp.redirect(urlDatabase[req.params.shortURL], 302);
+});
 
 
 app.get("/urls.json", (req, resp) => {
