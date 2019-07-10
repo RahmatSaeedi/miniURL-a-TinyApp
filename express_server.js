@@ -1,7 +1,10 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const { generateRandomString } = require("./generateRandomString");
 const app = express();
 const PORT = 80;
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", 'ejs');
 
 const urlDatabase = {
@@ -10,7 +13,7 @@ const urlDatabase = {
 };
 
 app.get("/", (req, resp) => {
-  resp.render("urls_new", {
+  resp.render("urls_index", {
     'urls': urlDatabase
   });
 });
@@ -21,6 +24,14 @@ app.get("/urls", (req, resp) => {
   });
 });
 
+app.post('/urls', (req, resp) => {
+  const longURL = req.body.longURL;
+  const shortURL = generateRandomString();
+  urlDatabase[shortURL] = longURL;
+  
+  resp.send("OK");
+});
+
 app.get("/urls.json", (req, resp) => {
   resp.json(urlDatabase);
 });
@@ -29,7 +40,7 @@ app.get("/urls/new", (req, resp) => {
   resp.render("urls_new");
 });
 
-app.get(`/urls/:shortURL`, (req, resp) => {
+app.get('urls/:shortURL', (req, resp) => {
 
   resp.render("urls_show", {
     longURL: urlDatabase[req.params.shortURL],
