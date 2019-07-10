@@ -14,7 +14,24 @@
         <h5 class="card-title">TinyURL for: <%= longURL %></h5>
         <p class="card-text">Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a></p>
       </div>
-    <div class="card-footer text-muted"></div>
+    <div class="card-footer text-muted">
+      <div class="card-body">
+          <h1 class="card-title">Edit</h1>
+          <p class="card-text">
+            <form action="/urls/<%= shortURL %>/update" method="POST">
+              <div class="input-group mb-3 justify-content-center">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">   New URL:   </span>
+                </div>
+                <input name="longURL" type="text" class="" placeholder="   https://...   " />
+                <div class="input-group-append">
+                    <button class="btn btn-primary">Update</button>
+                </div>
+              </div>
+            </form>
+          </p>
+      </div>
+    </div>
   </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
