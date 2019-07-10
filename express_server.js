@@ -12,13 +12,13 @@ const urlDatabase = {
   "g" : "https://www.google.ca"
 };
 
-app.get("/", (req, resp) => {
+app.get('/', (req, resp) => {
   resp.render("urls_index", {
     'urls': urlDatabase
   });
 });
 
-app.get("/urls", (req, resp) => {
+app.get('/urls', (req, resp) => {
   resp.render("urls_index", {
     'urls': urlDatabase
   });
@@ -32,11 +32,11 @@ app.post('/urls', (req, resp) => {
   resp.redirect(`urls/${shortURL}`);
 });
 
-app.get("/urls.json", (req, resp) => {
+app.get('/urls.json', (req, resp) => {
   resp.json(urlDatabase);
 });
 
-app.get("/urls/new", (req, resp) => {
+app.get('/urls/new', (req, resp) => {
   resp.render("urls_new");
 });
 
@@ -48,8 +48,14 @@ app.get('/urls/:shortURL', (req, resp) => {
   });
 });
 
-app.get(`/u/:shortURL`, (req, resp) => {
+app.get('/u/:shortURL', (req, resp) => {
   resp.redirect(302, urlDatabase[req.params.shortURL]);
+});
+
+app.post('/urls/:shortURL/delete', (req, resp) => {
+  
+  delete urlDatabase[req.params.shortURL];
+  resp.redirect('/');
 });
 
 app.listen(PORT, () => {
