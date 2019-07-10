@@ -1,10 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const { generateRandomString } = require("./generateRandomString");
 const app = express();
 const PORT = 80;
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 app.set("view engine", 'ejs');
 
 const urlDatabase = {
@@ -16,6 +18,10 @@ app.get('/', (req, resp) => {
   resp.render("urls_index", {
     'urls': urlDatabase
   });
+});
+
+app.post('/', (req, resp) => {
+  resp.send('In Progress');
 });
 
 app.get('/urls', (req, resp) => {
