@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 8080;
+const PORT = 80;
 
 app.set("view engine", 'ejs');
 
@@ -9,12 +9,25 @@ const urlDatabase = {
   "g" : "https://www.google.ca"
 };
 
+app.get("/", (req, resp) => {
+  resp.render("urls_new", {
+    'urls': urlDatabase
+  });
+});
+
 app.get("/urls", (req, resp) => {
   resp.render("urls_index", {
     'urls': urlDatabase
   });
 });
 
+app.get("/urls.json", (req, resp) => {
+  resp.json(urlDatabase);
+});
+
+app.get("/urls/new", (req, resp) => {
+  resp.render("urls_new");
+});
 
 app.get(`/urls/:shortURL`, (req, resp) => {
 
@@ -26,11 +39,6 @@ app.get(`/urls/:shortURL`, (req, resp) => {
 
 app.get(`/u/:shortURL`, (req, resp) => {
   resp.redirect(urlDatabase[req.params.shortURL], 302);
-});
-
-
-app.get("/urls.json", (req, resp) => {
-  resp.json(urlDatabase);
 });
 
 app.listen(PORT, () => {
