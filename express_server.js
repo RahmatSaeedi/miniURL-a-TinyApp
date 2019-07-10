@@ -29,7 +29,7 @@ app.post('/urls', (req, resp) => {
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = longURL;
   
-  resp.send("OK");
+  resp.redirect(`urls/${shortURL}`);
 });
 
 app.get("/urls.json", (req, resp) => {
@@ -40,7 +40,7 @@ app.get("/urls/new", (req, resp) => {
   resp.render("urls_new");
 });
 
-app.get('urls/:shortURL', (req, resp) => {
+app.get('/urls/:shortURL', (req, resp) => {
 
   resp.render("urls_show", {
     longURL: urlDatabase[req.params.shortURL],
@@ -49,7 +49,7 @@ app.get('urls/:shortURL', (req, resp) => {
 });
 
 app.get(`/u/:shortURL`, (req, resp) => {
-  resp.redirect(urlDatabase[req.params.shortURL], 302);
+  resp.redirect(302, urlDatabase[req.params.shortURL]);
 });
 
 app.listen(PORT, () => {
