@@ -7,19 +7,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <title>New URL - TinyApp Example</title>
+    <title>TinyApp</title>
   </head>
 
   <body>
 
     <% include ./_header %>
-    <main style="margin: 1em;" class="text-center">
-      <h3 style="margin: 4em 0 1em 0;">Create TinyURL</h3>
-      <form class="input-group justify-content-center" action="/urls" method="POST">
+    <main class="text-center">
+      <h3>Create TinyURL</h3>
+      <form class="input-group bodyForm" action="/urls" method="POST">
         <div class="input-group-prepend">
           <label class="input-group-text" for="longURL">Enter a URL:</label>
         </div>
-        <input type="text" name="longURL" placeholder="http://" style="width: 300px;">
+        <input type="text" name="longURL" placeholder="&emsp;&emsp;http://">
         <div class="input-group-append">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>

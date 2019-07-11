@@ -12,6 +12,31 @@
       border-color: blue;
       color: black;
     }
+    main {
+      margin: 1em;
+    }
+      main > h3:first-child {
+        margin: 4em 0 1em 0;
+      }
+
+    input { 
+      width: 300px;
+    }
+
+    .bodyForm {
+      width: 500px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .bodyForm > div{
+      justify-content: right;
+    }
+
+    .bodyForm > button {
+      width: 300px;
+      float: right;
+    }
     @media only screen and (max-width: 767px){
       #logInFormIcon {
         font-size: 1em;
@@ -26,14 +51,19 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="/urls">My URLs</a>
-          <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+
+          <% if (username !== undefined) { %>
+            <a class="nav-item nav-link" href="/urls">My URLs</a>
+            <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+          <% } else { %>
+            <a class="nav-item nav-link" href="/register">Register</a>
+          <% } %>
         </div>
       </div>
       <% if(username === undefined) {%>
       <div>
         <form class="input-group input-group collapse" method="POST" action="/" id="loginForm">
-          <input type="text" name="username" placeholder="User Name" aria-label="User Name"/>
+          <input type="text" name="username" placeholder="&emsp;&emsp;User Name" aria-label="User Name"/>
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">Login</button>
           </div>

@@ -3,7 +3,7 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>URL - TinyApp Example</title>
+  <title>TinyApp</title>
 </head>
 
 <body>
@@ -18,12 +18,12 @@
       <div class="card-body">
           <h1 class="card-title">Edit</h1>
           <p class="card-text">
-            <form action="/urls/<%= shortURL %>/update" method="POST">
-              <div class="input-group mb-3 justify-content-center">
+            <form class="bodyForm" action="/urls/<%= shortURL %>/update" method="POST">
+              <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <label for="longURL" class="input-group-text" id="inputGroup-sizing-default">   New URL:   </label>
+                  <label for="longURL" class="input-group-text" id="inputGroup-sizing-default">New URL:</label>
                 </div>
-                <input name="longURL" type="text" class="" placeholder="   https://...   " />
+                <input name="longURL" type="text" class="" placeholder="&emsp;&emsp;https://...   " />
                 <div class="input-group-append">
                     <button class="btn btn-primary">Update</button>
                 </div>
