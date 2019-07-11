@@ -1,3 +1,23 @@
+  <style>
+    #logInFormIcon {
+      font-size: 2em;
+      padding-left: 1em;
+    }
+    #logInFormIcon::before {
+      content: '\2699';     /*Gear; HTML: &#9881;*/
+    }
+    #loggedInMsg {
+      padding-right:  1em;
+      background-color:#28a745;
+      border-color: blue;
+      color: black;
+    }
+    @media only screen and (max-width: 767px){
+      #logInFormIcon {
+        font-size: 1em;
+      }
+    }
+  </style>
   <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-success">
       <a class="navbar-brand" href="/urls">TinyApp</a>
@@ -10,15 +30,29 @@
           <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
         </div>
       </div>
+      <% if(username === undefined) {%>
       <div>
         <form class="input-group input-group collapse" method="POST" action="/" id="loginForm">
-          <input type="text" name="username" aria-label="User Name"/>
+          <input type="text" name="username" placeholder="User Name" aria-label="User Name"/>
           <div class="input-group-append">
-            <button class="btn btn-primary">Login</button>
+            <button class="btn btn-primary" type="submit">Login</button>
           </div>
         </form>
       </div>
-      <a data-target="#loginForm" data-toggle="collapse" style="font-size: 2em; padding-left: 1em" href="#">&#9881;</a>
+      <a data-target="#loginForm" data-toggle="collapse" id="logInFormIcon" href="#"></a>
+      <%} else {%>
+      <div>
+        <form class="input-group input-group" method="POST" action="/logout" id="logoutForm">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="loggedInMsg" >Logged In As: <%= username %></div>
+          </div>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Logout</button>
+          </div>
+        </form>
+      </div>
+      <%} %>
+      <%= console.log(username) %>
     </nav>
 
   </header>

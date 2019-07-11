@@ -16,16 +16,24 @@ const urlDatabase = {
 
 app.get('/', (req, resp) => {
   resp.render("urls_index", {
+    'username': req.cookies["username"],
     'urls': urlDatabase
   });
 });
-
 app.post('/', (req, resp) => {
-  resp.send('In Progress');
+  resp.cookie(`username`, req.body.username, { expires: new Date(Date.now() + 30000)});
+  resp.redirect('/');
+});
+
+app.post('/logout', (req, resp) => {
+  resp.cookie(`username`, '', { expires: new Date(Date.now()) });
+
+  resp.redirect('/');
 });
 
 app.get('/urls', (req, resp) => {
   resp.render("urls_index", {
+    'username': req.cookies["username"],
     'urls': urlDatabase
   });
 });
@@ -42,13 +50,16 @@ app.get('/urls.json', (req, resp) => {
 });
 
 app.get('/urls/new', (req, resp) => {
-  resp.render("urls_new");
+  resp.render("urls_new",{
+    'username': req.cookies["username"]
+  });
 });
 
 app.get('/urls/:shortURL', (req, resp) => {
   resp.render("urls_show", {
-    longURL: urlDatabase[req.params.shortURL],
-    shortURL: req.params.shortURL
+    'username': req.cookies["username"],
+    'longURL': urlDatabase[req.params.shortURL],
+    'shortURL': req.params.shortURL
   });
 });
 
