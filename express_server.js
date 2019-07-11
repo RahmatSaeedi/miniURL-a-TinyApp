@@ -21,7 +21,7 @@ app.get('/', (req, resp) => {
   });
 });
 app.post('/', (req, resp) => {
-  resp.cookie(`username`, req.body.username, { expires: new Date(Date.now() + 30000)});
+  resp.cookie(`username`, req.body.username, { expires: new Date(Date.now() + 60000)});
   resp.redirect('/');
 });
 
@@ -30,6 +30,13 @@ app.post('/logout', (req, resp) => {
 
   resp.redirect('/');
 });
+
+app.get('/register', (req, resp) => {
+  resp.render("urls_register", {
+    'username': req.cookies["username"]
+  });
+});
+
 
 app.get('/urls', (req, resp) => {
   resp.render("urls_index", {
