@@ -1,15 +1,18 @@
 const database = {
   g : {
     longURL : "https://www.google.ca",
-    userID : "test1"
+    userID : "test1",
+    'visits' : 10
   },
   LH : {
     longURL : "https://www.lighthouselabs.ca",
-    userID : "test1"
+    userID : "test1",
+    'visits' : 10
   },
   e : {
     longURL : "https://www.example.com",
-    userID : "someoneelse"
+    userID : "someoneelse",
+    'visits' : 10
   }
 };
 
@@ -21,7 +24,8 @@ const addURL = (shortCode, longURL, userID) => {
   if (shortCode && longURL && userID) {
     database[shortCode] = {
       longURL,
-      userID
+      userID,
+      'visits' : 0
     };
     return true;
   } else {
@@ -41,9 +45,14 @@ const removeURL = (shortCode, userID) => {
   }
 };
 
-const getURL = (shortCode) => {
+const getURL = (shortCode, increment = false) => {
   shortCode = typeof(shortCode) === 'string' ? shortCode : undefined;
+  increment = typeof(increment) === 'boolean' ? increment : false;
+
   if (shortCode && database[shortCode]) {
+    if (increment) {
+      database[shortCode].visits += 1;
+    }
     return database[shortCode];
   } else {
     return false;

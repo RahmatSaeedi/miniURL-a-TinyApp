@@ -56,7 +56,7 @@ app.get('/clean', (req, resp) => {
 
 app.get('/login', (req, resp) => {
   if (authenticateSession(req.cookies.session_id)) {
-    resp.redirect("/");
+    resp.redirect("/urls");
   } else {
     resp.render("urls_login");
   }
@@ -89,7 +89,7 @@ app.get('/urls', (req, resp) => {
       let URL = getURL(shortCode);
       
       if (URL) {
-        urls[shortCode] = URL.longURL;
+        urls[shortCode] = URL;
       }
     }
 
@@ -99,8 +99,8 @@ app.get('/urls', (req, resp) => {
       'urls': urls
     });
   } else {
-    resp.render("urls_index", {
-
+    resp.render("urls_errors", {
+      errorMessage : "Please Login First"
     });
   }
 });
@@ -113,7 +113,7 @@ app.get('/urls.json', (req, resp) => {
     for (let shortCode of getURI('urls', req.cookies.session_id)) {
       let URL = getURL(shortCode);
       if (URL) {
-        urls[shortCode] = URL.longURL;
+        urls[shortCode] = URL;
       }
     }
 
@@ -142,7 +142,19 @@ app.get('/urls/new', (req, resp) => {
 
 app.get('/urls/:shortURL', (req, resp) => {
   const url = getURL(req.params.shortURL);
-  if (authenticateSession(req.cookies.session_id) &&  url && getSessionUserID(req.cookies.session_id) === url.userID) {
+  if (!url) {
+    resp.render("urls_errors", {
+      errorMessage : "Unknown short code",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+    });
+  } else if (!authenticateSession(req.cookies.session_id)) {
+    resp.render("urls_errors", {
+      errorMessage : "Please Login First",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+    });
+  } else if (authenticateSession(req.cookies.session_id) &&  url && getSessionUserID(req.cookies.session_id) === url.userID) {
     updateCookie(resp, req.cookies.session_id);
     resp.render("urls_show", {
       'session_id': req.cookies.session_id,
@@ -151,16 +163,24 @@ app.get('/urls/:shortURL', (req, resp) => {
       'shortURL': req.params.shortURL
     });
   } else {
-    resp.redirect('/');
+    resp.render("urls_errors", {
+      errorMessage : "Are you sure this belongs to you?",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+    });
   }
 });
 
 app.get('/u/:shortURL', (req, resp) => {
-  const url = getURL(req.params.shortURL);
+  const url = getURL(req.params.shortURL, true);
   if (url) {
     resp.redirect(url.longURL);
   } else {
-    resp.send('The requested URL does not exists anymore.');
+    resp.render("urls_errors", {
+      errorMessage : "Requested URL is no more!...",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+    });
   }
 });
 
@@ -170,10 +190,10 @@ app.post('/login', (req, resp) => {
     updateCookie(resp, sessionID);
     resp.redirect('/urls');
   } else {
-    resp.statusCode = 404;
-    resp.json({
-      "Error" : "404 - Unauthorized!",
-      "Info" : "Unknown or incorrect username / pass combination."
+    resp.render("urls_login", {
+      errorMessage : "Unknown or incorrect username / pass combination.",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
     });
   }
 });
@@ -193,21 +213,23 @@ app.post('/register', (req, resp) => {
       resp.redirect('/urls');
     } else {
       resp.statusCode = 400;
-      resp.json({
-        "Error" : 400,
-        "Info" : "A user with that email address already exists!"
+      resp.render("urls_errors", {
+        errorMessage : "A user with that email address already exists!",
+        'session_id': req.cookies.session_id,
+        'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
       });
     }
   } else {
     resp.statusCode = 400;
-    resp.json({
-      "Error" : 400,
-      "Info" : "Empty username or password!"
+    resp.render("urls_errors", {
+      errorMessage : "Empty username or password!",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
     });
   }
 });
 
-app.post('/urls/new', (req, resp) => {
+app.post('/urls', (req, resp) => {
   if (authenticateSession(req.cookies.session_id) && req.body.longURL !== undefined) {
     const shortURL = generateRandomString();
     let r = addURL(shortURL, req.body.longURL, getSessionUserID(req.cookies.session_id));
@@ -216,8 +238,20 @@ app.post('/urls/new', (req, resp) => {
       addToURI('urls', shortURL, req.cookies.session_id);
       resp.redirect(`/urls/${shortURL}`);
     } else {
-      resp.redirect('/', 418);
+      resp.statusCode = 500;
+      resp.render("urls_errors", {
+        errorMessage : "Could not process the request.",
+        'session_id': req.cookies.session_id,
+        'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+      });
     }
+  } else {
+    resp.statusCode = 500;
+    resp.render("urls_errors", {
+      errorMessage : "Unauthorized",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+    });
   }
 });
 
@@ -226,17 +260,33 @@ app.post('/urls/:shortURL/delete', (req, resp) => {
   if (authenticateSession(req.cookies.session_id) &&  url && getSessionUserID(req.cookies.session_id) === url.userID) {
     removeURL(req.params.shortURL, getSessionUserID(req.cookies.session_id));
     deleteFromURI('urls', req.params.shortURL, req.cookies.session_id);
+    resp.redirect('/');
+  } else {
+    resp.statusCode = 500;
+    resp.render("urls_errors", {
+      errorMessage : "Unauthorized",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+    });
   }
-  resp.redirect('/');
 });
 
 app.post('/urls/:shortURL/update', (req, resp) => {
   const url = getURL(req.params.shortURL);
   if (authenticateSession(req.cookies.session_id) &&  url && getSessionUserID(req.cookies.session_id) === url.userID) {
     updateURL(req.params.shortURL, req.body.longURL, getSessionUserID(req.cookies.session_id));
+    resp.redirect('/');
+  } else {
+    resp.statusCode = 500;
+    resp.render("urls_errors", {
+      errorMessage : "Unauthorized",
+      'session_id': req.cookies.session_id,
+      'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id))
+    });
   }
-  resp.redirect('/');
 });
+
+app.use('/favicon.ico', express.static('views/favicon.ico'));
 
 app.listen(PORT, () => {
   console.log(`The app listening on port ${PORT}`);

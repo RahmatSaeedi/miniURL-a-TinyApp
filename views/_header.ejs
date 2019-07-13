@@ -39,7 +39,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <% if (typeof(session_id) !== "undefined") { %>
+          <% if (typeof(session_id) !== "undefined" && session_id) { %>
             <a class="nav-item nav-link" href="/urls">My URLs</a>
             <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
           <% } else { %>
@@ -48,7 +48,7 @@
           <% } %>
         </div>
       </div>
-      <% if(typeof(user_email) !== "undefined") {%>
+      <% if(typeof(user_email) !== "undefined" && user_email) {%>
       <div>
         <form class="input-group input-group" method="POST" action="/logout" id="logoutForm">
           <div class="input-group-prepend">
