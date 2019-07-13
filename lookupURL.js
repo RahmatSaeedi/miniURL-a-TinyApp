@@ -1,30 +1,38 @@
 const database = {
   g : {
+    shortURL : "g",
     longURL : "https://www.google.ca",
-    userID : "test1",
-    'visits' : 10
+    userID : "userID",
+    lastUpdated : Date.now(),
+    'visits' : Math.floor(Math.random() * 500)
   },
   LH : {
+    shortURL : "LH",
     longURL : "https://www.lighthouselabs.ca",
-    userID : "test1",
-    'visits' : 10
+    userID : "userID",
+    lastUpdated : Date.now(),
+    'visits' : Math.floor(Math.random() * 500)
   },
-  e : {
+  example : {
+    shortURL : "example",
     longURL : "https://www.example.com",
-    userID : "someoneelse",
-    'visits' : 10
+    userID : "example",
+    lastUpdated : Date.now(),
+    'visits' : Math.floor(Math.random() * 500)
   }
 };
 
-const addURL = (shortCode, longURL, userID) => {
-  shortCode = typeof(shortCode) === 'string' ? shortCode : undefined;
+const addURL = (shortURL, longURL, userID) => {
+  shortURL = typeof(shortURL) === 'string' ? shortURL : undefined;
   longURL = typeof(longURL) === 'string' ? longURL : undefined;
   userID = typeof(userID) === 'string' ? userID : undefined;
 
-  if (shortCode && longURL && userID) {
-    database[shortCode] = {
+  if (shortURL && longURL && userID) {
+    database[shortURL] = {
+      shortURL,
       longURL,
       userID,
+      lastUpdated : Date.now(),
       'visits' : 0
     };
     return true;
@@ -33,39 +41,40 @@ const addURL = (shortCode, longURL, userID) => {
   }
 };
 
-const removeURL = (shortCode, userID) => {
-  shortCode = typeof(shortCode) === 'string' ? shortCode : undefined;
+const removeURL = (shortURL, userID) => {
+  shortURL = typeof(shortURL) === 'string' ? shortURL : undefined;
   userID = typeof(userID) === 'string' ? userID : undefined;
-  let owner = typeof(database[shortCode].userID) === 'string' ? database[shortCode].userID : 'unknownOwner';
+  let owner = typeof(database[shortURL].userID) === 'string' ? database[shortURL].userID : 'unknownOwner';
 
-  if (shortCode && userID === owner) {
-    return delete database[shortCode];
+  if (shortURL && userID === owner) {
+    return delete database[shortURL];
   } else {
     return false;
   }
 };
 
-const getURL = (shortCode, increment = false) => {
-  shortCode = typeof(shortCode) === 'string' ? shortCode : undefined;
+const getURL = (shortURL, increment = false) => {
+  shortURL = typeof(shortURL) === 'string' ? shortURL : undefined;
   increment = typeof(increment) === 'boolean' ? increment : false;
 
-  if (shortCode && database[shortCode]) {
+  if (shortURL && database[shortURL]) {
     if (increment) {
-      database[shortCode].visits += 1;
+      database[shortURL].visits += 1;
     }
-    return database[shortCode];
+    return database[shortURL];
   } else {
     return false;
   }
 };
-const updateURL = (shortCode, longURL, userID) => {
-  shortCode = typeof(shortCode) === 'string' ? shortCode : undefined;
+const updateURL = (shortURL, longURL, userID) => {
+  shortURL = typeof(shortURL) === 'string' ? shortURL : undefined;
   longURL = typeof(longURL) === 'string' ? longURL : undefined;
   userID = typeof(userID) === 'string' ? userID : undefined;
-  let owner = typeof(database[shortCode].userID) === 'string' ? database[shortCode].userID : 'unknownOwner';
+  let owner = typeof(database[shortURL].userID) === 'string' ? database[shortURL].userID : 'unknownOwner';
 
-  if (shortCode && longURL && userID && userID === owner) {
-    database[shortCode].longURL = longURL;
+  if (shortURL && longURL && userID && userID === owner) {
+    database[shortURL].longURL = Date.now();
+    database[shortURL].longURL = longURL;
     return true;
   } else {
     return false;

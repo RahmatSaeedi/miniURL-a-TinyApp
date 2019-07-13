@@ -8,22 +8,29 @@
 
 <body>
   <% include ./_header %>
+  <style>
+   b {
+     color: seagreen;
+   }
+  </style>
   <div class="card text-center">
       <div class="card-header"></div>
       <div class="card-body">
-        <h5 class="card-title">TinyURL for: <i><%= longURL %></i></h5>
-        <p class="card-text">Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a></p>
+        <h5 class="card-text"><b>Short URL: </b><a href="/u/<%= url.shortURL %>"><%= url.shortURL %></a></h5>
+        <p class="card-title"><b>For: </b><i><%= url.longURL %></i></p>
+        <p class="card-text"><b>Number of visits:</b> <%= url.visits %> visits</p>
+        <p class="card-text"><b>Last updated:</b> <%= new Date(url.lastUpdated) %> </p>
       </div>
     <div class="card-footer text-muted">
       <div class="card-body">
           <h1 class="card-title">Edit</h1>
           <p class="card-text">
-            <form class="bodyForm" action="/urls/<%= shortURL %>/update" method="POST">
+            <form class="bodyForm" action="/urls/<%= url.shortURL %>/update" method="POST">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <label for="longURL" class="input-group-text" id="inputGroup-sizing-default">New URL:</label>
                 </div>
-                <input name="longURL" type="text" class="" placeholder="&emsp;&emsp;https://...   " />
+                <input name="longURL" type="text" class="" placeholder="&emsp;https://www...   " />
                 <div class="input-group-append">
                     <button class="btn btn-primary">Update</button>
                 </div>

@@ -159,8 +159,7 @@ app.get('/urls/:shortURL', (req, resp) => {
     resp.render("urls_show", {
       'session_id': req.cookies.session_id,
       'user_email': getUserEmailByID(getSessionUserID(req.cookies.session_id)),
-      'longURL': url.longURL,
-      'shortURL': req.params.shortURL
+      'url': url
     });
   } else {
     resp.render("urls_errors", {
@@ -174,7 +173,7 @@ app.get('/urls/:shortURL', (req, resp) => {
 app.get('/u/:shortURL', (req, resp) => {
   const url = getURL(req.params.shortURL, true);
   if (url) {
-    resp.redirect(url.longURL);
+    resp.redirect(302, url.longURL);
   } else {
     resp.render("urls_errors", {
       errorMessage : "Requested URL is no more!...",

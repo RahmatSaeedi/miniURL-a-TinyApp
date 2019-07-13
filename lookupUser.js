@@ -5,19 +5,27 @@ const localVariables = {
   sessionDuration : 15    //Time in minutes until session expires
 };
 
+
 const sessions = {
   "sessionID" : {
-    "userID": "test1",
-    "Expires" :  new Date(Date.now() + localVariables.sessionDuration * 60 * 1000)
+    "userID": "userID",
+    "Expires" :  new Date(Date.now() + 60000)
   }
 };
 
 const users = {
-  "test1": {
-    id: "test1",
-    email: "email1@test",
-    password: hashSync("pass", 10),
+  "userID": {
+    id: "userID",
+    email: "admin@example.com",
+    password: hashSync("password", 10),
     urls : ['g', 'LH']
+  },
+
+  "example": {
+    id: "example",
+    email: "example@example.com",
+    password: hashSync("password", 10),
+    urls : ['example']
   }
 };
 
