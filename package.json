@@ -1,17 +1,17 @@
 {
-  "name": "miniURL",
+  "name": "@rahmatsaeedi/miniurl",
   "version": "1.0.0",
   "description": "A full stack, light-weight, simplified, & minified version of bit.ly, that allows users to shorten long URLs",
   "main": "express_server.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon -L express_server.js",
+    "start": "nodemon -L express_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RahmatSaeedi/tinyApp.git"
   },
-  "keywords":[
+  "keywords": [
     "miniURL",
     "tinyApp",
     "bit.ly",
@@ -21,7 +21,7 @@
     "Bootcamp",
     "Web development bootcamp project"
   ],
-  "author": "",
+  "author": "Rahmat Saeedi",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/RahmatSaeedi/tinyApp/issues"
@@ -36,5 +36,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
+  },
+  "directories": {
+    "doc": "doc"
   }
 }
