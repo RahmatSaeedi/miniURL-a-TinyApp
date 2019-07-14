@@ -49,7 +49,7 @@ Also, [lookupURL.js][lookupURL] and [lookupUser.js][lookupUser] contains two reg
       }
     ```
 
-[`lookupUser.js`](lookupUser.js) : contains logics related to processing stored shorcode for URLs, such as: 
+[`lookupUser.js`](lookupUser.js) : contains logics related to processing stored shorcode for URLs: 
 
   * `initSessions ()` : Sets an interval to delete expired sessions routinly. Cleaning happens once every _localVariables.sessionDuration_ minutes.
   * `authenticate (email, pass)` : Authenticates plaintext password *pass* of user with email *email* against the stored hashed password.
