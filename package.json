@@ -1,23 +1,31 @@
 {
-  "name": "tinnyApp",
+  "name": "miniURL",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A full stack, light-weight, simplified, & minified version of bit.ly, that allows users to shorten long URLs",
+  "main": "express_server.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon -L express_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RahmatSaeedi/tinnyApp.git"
+    "url": "git+https://github.com/RahmatSaeedi/tinyApp.git"
   },
-  "keywords": [],
+  "keywords":[
+    "miniURL",
+    "bit.ly",
+    "url shortner",
+    "tinyApp",
+    "Lighthouse Labs",
+    "Bootcamp",
+    "Web development bootcamp project"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RahmatSaeedi/tinnyApp/issues"
+    "url": "https://github.com/RahmatSaeedi/tinyApp/issues"
   },
-  "homepage": "https://github.com/RahmatSaeedi/tinnyApp#readme",
+  "homepage": "https://github.com/RahmatSaeedi/tinyApp#readme",
   "dependencies": {
     "bcrypt": "3.0.6",
     "body-parser": "^1.19.0",

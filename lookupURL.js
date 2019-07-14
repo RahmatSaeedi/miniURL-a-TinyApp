@@ -53,12 +53,12 @@ const removeURL = (shortURL, userID) => {
   }
 };
 
-const getURL = (shortURL, increment = false) => {
+const getURL = (shortURL, incrementVisit = false) => {
   shortURL = typeof(shortURL) === 'string' ? shortURL : undefined;
-  increment = typeof(increment) === 'boolean' ? increment : false;
+  incrementVisit = typeof(increment) === 'boolean' ? incrementVisit : false;
 
   if (shortURL && database[shortURL]) {
-    if (increment) {
+    if (incrementVisit) {
       database[shortURL].visits += 1;
     }
     return database[shortURL];

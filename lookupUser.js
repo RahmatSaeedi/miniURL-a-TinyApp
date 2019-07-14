@@ -220,11 +220,11 @@ const getURI = (uri, sessionID) => {
   }
 };
 
-const getUserEmailByID = (uID) => {
-  uID = typeof(uID) === 'string' ? uID : false;
+const getUserEmailByID = (userID) => {
+  userID = typeof(userID) === 'string' ? userID : false;
 
-  if (users[uID]) {
-    return users[uID].email;
+  if (users[userID]) {
+    return users[userID].email;
   } else {
     return false;
   }
