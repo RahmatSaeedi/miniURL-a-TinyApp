@@ -1,6 +1,6 @@
 # [`miniURL`][miniurl] - a `TinyApp` Project
 
-[`miniurl`][miniurl] is a full stack web application, built with [`Node`][node] and [`Express`][express], that allows users to shorten long URLs (simillar to [bit.ly][bit.ly]). This project was built as a *proof of concept* for  for learning purposes. 
+[`miniurl`][miniurl] is a full stack web application, built with [`Node`][node] and [`Express`][express], that allows users to shorten long URLs (similar to [bit.ly][bit.ly]). This project was built as a *proof of concept* for  for learning purposes. 
 
 **_BEWARE:_ This application _does not store_ Users and URL databases to hard disk or external databases. Once the application is restarted all changes are lost, thus changes to [lookupURL.js][lookupURL] and [lookupUser.js][lookupUser] are needed to store these values.**
 
